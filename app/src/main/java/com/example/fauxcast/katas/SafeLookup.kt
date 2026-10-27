@@ -1,32 +1,34 @@
 package com.example.fauxcast.katas
 
-import android.util.Log
-
 /*
  * Kata — Safe lookup   (Phase 0: null safety)
  *
- * Look up a value in a map by key, returning a default when the key is absent.
+ * PART A — lookupOrDefault(values, key, default):
+ *   - key present -> its value
+ *   - key absent  -> default
+ *   - use Elvis ?: ; no !!.
  *
- * lookupOrDefault(values, key, default):
- *   - key present -> return its value
- *   - key absent  -> return default
- *   - never crash; no !! allowed — use the Elvis operator ?:.
+ *   Scenarios to cover in tests:
+ *     - present key           -> value
+ *     - absent key            -> default
+ *     - empty map             -> default
+ *     - value is "" (empty)   -> returns "" , NOT default
+ *                                (?: only fires on null, never on an empty string — key edge!)
+ *     - keys are case-sensitive: lookup "EN" when only "en" exists -> default
+ *
+ * PART B (stretch) — lookupOrNull(values, key): String?
+ *   - return the value, or null when absent (practice returning a nullable type).
+ *     Scenarios: present -> value ; absent -> null ; empty map -> null.
  *
  * Examples:
  *   lookupOrDefault(mapOf("en" to "English"), "en", "Unknown") -> "English"
- *   lookupOrDefault(mapOf("en" to "English"), "fr", "Unknown") -> "Unknown"
- *   lookupOrDefault(emptyMap(), "en", "Unknown")               -> "Unknown"
- *
- * Why this teaches null safety: map access `values[key]` returns a NULLABLE type (String?) —
- * it is null when the key is missing, so you must handle that null (with ?:).
- *
+ *   lookupOrDefault(mapOf("x" to ""), "x", "Unknown")          -> ""     (empty, not default)
+ *   lookupOrNull(mapOf("en" to "English"), "fr")               -> null
  */
 fun lookupOrDefault(values: Map<String, String>, key: String, default: String): String {
     return values[key] ?: default
 }
 
-fun main() {
-    println(lookupOrDefault(mapOf("en" to "English"), "en", "Unknown")) // English
-    println(lookupOrDefault(mapOf("en" to "English"), "fr", "Unknown")) // Unknown
-    println(lookupOrDefault(emptyMap(), "en", "Unknown"))               // Unknown
+fun lookupOrNull(values: Map<String, String>, key: String): String? {
+    return values[key]
 }
