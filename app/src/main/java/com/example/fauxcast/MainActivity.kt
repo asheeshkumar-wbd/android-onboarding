@@ -20,10 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             FauxcastTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Asheesh",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    HomeScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -31,17 +28,15 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun HomeScreen(modifier: Modifier = Modifier) {
+    Text("FauxCast", modifier)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun HomeScreenPreview() {
     FauxcastTheme {
-        Greeting("Android")
+        HomeScreen()
     }
 }
+
